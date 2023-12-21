@@ -1,7 +1,7 @@
 package Server;
 
 public class Start {
-	public static void main(String[] args) {
+	public static void main(String args[]) {
 		SetPassword frame1 = new SetPassword();
 		frame1.setSize(300, 80);
 		frame1.setLocation(500, 300);

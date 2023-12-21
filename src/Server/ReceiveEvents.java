@@ -4,27 +4,24 @@ import java.awt.Robot;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
-/* Used to recieve server commands then execute them at the client side*/
 
-class ReceiveEvents extends Thread {
+public class ReceiveEvents extends Thread {
 	Socket socket = null;
 	Robot robot = null;
-	boolean continueLoop = true;
+	boolean continueLopp = true;
 
 	public ReceiveEvents(Socket socket, Robot robot) {
-
 		this.socket = socket;
 		this.robot = robot;
-		start(); // Start the thread and hence calling run method
+		start();
 	}
 
 	public void run() {
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(socket.getInputStream());
-			while (continueLoop) {
-				// recieve commands and respond accordingly
 
+			while (continueLopp) {
 				int command = scanner.nextInt();
 				switch (command) {
 				case -1:
@@ -43,11 +40,10 @@ class ReceiveEvents extends Thread {
 					robot.mouseMove(scanner.nextInt(), scanner.nextInt());
 					break;
 				}
-
 			}
-		} catch (IOException ex) {
-			ex.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-	}// end function
+	}
 
-}// end class
+}

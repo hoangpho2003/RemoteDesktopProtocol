@@ -10,9 +10,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.swing.*;
 
 public class InitConnection {
-
 	ServerSocket socket = null;
 	DataInputStream password = null;
 	DataOutputStream verify = null;
@@ -23,12 +23,10 @@ public class InitConnection {
 		Robot robot = null;
 		Rectangle rectangle = null;
 		try {
-			System.out.println("Awaiting Connection from Client");
+			System.out.println("waiting for client to get connected");
 			socket = new ServerSocket(port);
-
 			GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice gDev = gEnv.getDefaultScreenDevice();
-
 			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 			String width = "" + dim.getWidth();
 			String height = "" + dim.getHeight();
@@ -41,10 +39,9 @@ public class InitConnection {
 				Socket sc = socket.accept();
 				password = new DataInputStream(sc.getInputStream());
 				verify = new DataOutputStream(sc.getOutputStream());
-				// String username=password.readUTF();
-				String pssword = password.readUTF();
 
-				if (pssword.equals(value1)) {
+				String psword = password.readUTF();
+				if (psword.equals(value1)) {
 					verify.writeUTF("valid");
 					verify.writeUTF(width);
 					verify.writeUTF(height);
@@ -52,10 +49,13 @@ public class InitConnection {
 					new ReceiveEvents(sc, robot);
 				} else {
 					verify.writeUTF("Invalid");
+
 				}
+
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
